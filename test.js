@@ -10,7 +10,7 @@ var testAddingAttempt = function() {
   var addAttempt = function() {
     return cubeDB.addAttempt({
       "date": currentUnixSeconds(),
-      "resultMilliseconds": Math.floor(Math.random()*10000) + 10000
+      "resultCentiseconds": Math.floor(Math.random()*1000) + 1000
     });
   };
 

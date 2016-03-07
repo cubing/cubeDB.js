@@ -11,10 +11,10 @@
 
     ScrambleString := String
 
-    Milliseconds := int
+    Centiseconds := int
 
     ResultFormats := string enum
-      ["Milliseconds", "MoveCount", ...]
+      ["Centiseconds", "MoveCount", ...]
 
     Event := {
       // implicit: string EventName
@@ -51,7 +51,7 @@
       scramble := ScrambleString
 
       // Result data
-      [optional] resultMilliseconds := Milliseconds [indexed]
+      [optional] resultCentiseconds := Centiseconds [indexed]
       // [optional] resultMoveCount := MoveCount [indexed] // Future possibility
 
     }]

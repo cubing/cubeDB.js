@@ -49,7 +49,7 @@ CubeDB.prototype = {
 
     // Create indices.
     attemptsStore.createIndex("date", "date", {unique: false});
-    attemptsStore.createIndex("resultMilliseconds", "resultMilliseconds", {unique: false});
+    attemptsStore.createIndex("resultCentiseconds", "resultCentiseconds", {unique: false});
 
     // Callback handling.
     attemptsStore.transaction.oncomplete = resolve;
