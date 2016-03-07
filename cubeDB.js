@@ -27,10 +27,10 @@ CubeDB.prototype = {
   initialize: function(databaseName) { return new Promise((function(resolve, reject) {
     DEBUG_LOG("initialize");
     var request = indexedDB.open(databaseName || this.DEFAULT_DATABASE_NAME, this.CURRENT_DATABASE_VERSION);
+    request.onsuccess = resolve;
     request.onerror = function(event) {
       throw new Error("Could not open dabatase!");
     };
-    request.onsuccess = resolve;
     request.onupgradeneeded = this._onupgradeneeded.bind(this);
   }).bind(this)); },
 
