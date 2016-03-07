@@ -31,7 +31,7 @@ do this:
 
 ## Current API (subject to change)
 
-### Initialiation
+### Initialization
 
     cubeDB.initialize().then(function() {
       // cubeDB is ready.
