@@ -56,6 +56,15 @@
 
     }]
 
+### preferences
+
+    preferences := [{
+      appId := string // e.g. "net.cubing.timer"
+      // encourage versioning?
+
+      // Individual entries up the app.
+    }]
+
 ## Future
 
 - Compress scrambles?
@@ -63,3 +72,4 @@
   - Sepatate table for deleted attempts + last modified date for each attempt? (present if modifed since original date)
   - Operational transforms?
 - Penalties/DNF
+- Allow common preferences to be unified across apps?
