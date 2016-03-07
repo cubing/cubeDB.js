@@ -8,9 +8,9 @@ var testAddingAttempt = function() {
   var cubeDB = new CubeDB();
 
   var addAttempt = function() {
-    cubeDB.addAttempt({
+    return cubeDB.addAttempt({
       "date": currentUnixSeconds(),
-      "resultMilliseconds": 1113
+      "resultMilliseconds": Math.floor(Math.random()*10000) + 10000
     });
   };
 
@@ -20,6 +20,11 @@ var testAddingAttempt = function() {
 
   cubeDB.initialize()
     .then(addAttempt)
+    .then(addAttempt)
+    .then(cubeDB.export.bind(cubeDB))
+    .then(function(json) {
+      DEBUG_LOG(JSON.stringify(json, null, "  "));
+    })
     .then(done);
 };
 

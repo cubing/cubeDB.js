@@ -2,9 +2,10 @@
 
 /*
 
-- import/export to JSON (with version)
+- import to JSON (with version)
 - Make the CubeDB constructor work as a promise
 - Support deleting/resetting database (with backup?)
+- Handle transaction.onabort
 
 */
 
@@ -82,10 +83,35 @@ CubeDB.prototype = {
     transaction.onerror = reject;
   }).bind(this)); },
 
-  export: function() {
-    // TODO: Export object stores using a cursor.
-    return {
-      "version": this.CURRENT_DATABASE_VERSION
-    };
-  }
+  // TODO: Generalize this to export any IndexedDB database.
+  export: function() { return new Promise((function(resolve, reject) {
+    DEBUG_LOG("export");
+    var transaction = this._database.transaction(["attempts"], "readonly");
+    var attemptsStore = transaction.objectStore("attempts");
+
+    var attempts = [];
+
+    // TODO: How interoperable is getAll()?
+    var openCursor = attemptsStore.openCursor();
+    openCursor.onsuccess = (function(event) {
+      var cursor = event.target.result;
+      if (cursor) {
+        attempts.push(cursor.value);
+        cursor.continue();
+      }
+    }).bind(this);
+    openCursor.onerror = function() {
+      // TODO: Check that the spec has this.
+      reject();
+    }
+
+    transaction.oncomplete = function() {
+        resolve({
+          databaseVersion: this.CURRENT_DATABASE_VERSION,
+          attempts: attempts
+        });
+      // TODO: Reconcile this with openCursor().onsuccess;
+    }
+    transaction.onerror = reject;
+  }).bind(this)); }
 };
